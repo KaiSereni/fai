@@ -1,7 +1,7 @@
-from firebase_functions import https_fn, options, logger
+from firebase_functions import https_fn, options
 from firebase_admin import initialize_app, credentials
 from flask import jsonify
-from reviewer import get_corrections
+from public_repo.reviewer import get_corrections
 
 cred = credentials.Certificate("fb_keys.json")
 initialize_app(cred)
@@ -14,7 +14,6 @@ def correct(request: https_fn.Request) -> https_fn.Response:
         context_title = data["context_title"]
         corrections = get_corrections(string, context_title)
     except Exception as e:
-        logger.warn(f"ERROR: {e}")
         response = jsonify({"error": "Invalid request"})
         return response
     

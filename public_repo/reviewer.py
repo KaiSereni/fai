@@ -1,11 +1,13 @@
 import json
 from openai import OpenAI
-import firebase_functions.params as params
 
 
-oai_key = params.StringParam("OAI_KEY")
-oai_org = params.StringParam("OAI_ORG")
-oai_project = params.StringParam("OAI_PROJECT")
+with open("oai_keys.json") as f:
+    keys = json.load(f)
+
+oai_key = keys["api_key"]
+oai_org = keys["organization"]
+oai_project = keys["project"]
 
 client = OpenAI(
     api_key=oai_key,
@@ -68,3 +70,9 @@ def get_corrections(string: str, context_title: str):
         })
     
     return corrections
+
+if __name__ == "__main__":
+    string = "The quick brown fox jumps over the lazy dog"
+    context_title = "The whole alphabet"
+    corrections = get_corrections(string, context_title)
+    print(corrections)
