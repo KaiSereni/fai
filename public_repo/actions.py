@@ -108,11 +108,18 @@ def text_to_action(input_text: str, possible_actions: list[str]) -> str:
 
 def assistant_response(input_string: str, possible_actions: list[str]) -> str:
     result_character = text_to_action(input_string, possible_actions)
-    speech_output = assistant_speech_output(input_string, result_character, possible_actions)
-    final_output = f"""
-The model chose action #{result_character}.
-The model's response is: {speech_output}
-"""
+    try:
+        result_character = int(result_character)
+        speech_output = assistant_speech_output(input_string, result_character, possible_actions)
+        final_output = f"""
+    The model chose action index {result_character}: {possible_actions[result_character]}.
+    The model's response is: {speech_output}
+    """
+    except:
+        result_character = result_character
+        final_output = f"""
+    The model's response is: {result_character}
+    """
     return final_output
 
 def text_to_speech(file_path):
@@ -125,5 +132,9 @@ def text_to_speech(file_path):
 
 if __name__ == "__main__":
     prompt = "DISABLE DA KITCHEN BRIGHTNESS THING."
+    #prompt = "My spaceship is in need of a bath."
+    #prompt = "Open the door to me spaceship."
+    #prompt = "Light up my room, or I'm going to be very angry."
+    #prompt = "Turn the kitchen light on. Or off. I don't really care."
     actions = ["Turn on the kitchen light.", "Turn off the kitchen light.", "Turn on the bedroom light.", "Turn off the bedroom light."]
     print(assistant_response(prompt, actions))
