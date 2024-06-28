@@ -1,2 +1,11 @@
-private_files/
-public_repo/oai_keys.json
+**
+!/site/
+!/site/package.json
+!/site/functions/
+!/site/public/
+!/site/public/**
+!/site/functions/*.py
+!/site/functions/requirements.txt
+!/site/src/
+!/site/src/**
+site/src/components/key_constants.tsx

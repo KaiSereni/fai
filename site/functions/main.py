@@ -1,7 +1,7 @@
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app, credentials
 from flask import jsonify
-from public_repo.reviewer import get_corrections
+from reviewer import get_corrections
 
 cred = credentials.Certificate("fb_keys.json")
 initialize_app(cred)

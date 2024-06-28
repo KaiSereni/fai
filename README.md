@@ -1,6 +1,14 @@
-## ForgotAI by Pohakoo, LLC: Open Source Repo
+# ForgotAI by Pohakoo, LLC: Open Source Repo
 
 Setup instructions:
+
+## Setup the frontend at `/site/`
+
+Run `npm i` to install dependencies<br>
+Create a new [ReactJS](https://react.dev/learn) project<br>
+Run `npx react dev` and open `localhost:3000`
+
+## Setup the backend at `/site/functions`:
 
 Create a venv and install the required packages
 
