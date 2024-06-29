@@ -18,7 +18,7 @@ export default function Actions() {
         audioChunksRef.current.push(event.data);
       };
       mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const blob = new Blob(audioChunksRef.current, { type: 'audio/wav' });
         setAudioBlob(blob);
         audioChunksRef.current = [];
         stream.getTracks().forEach(track => track.stop());
@@ -39,7 +39,7 @@ export default function Actions() {
     if (!audioBlob) return;
 
     const formData = new FormData();
-    formData.append('audio', audioBlob, 'recording.webm');
+    formData.append('audio', audioBlob, 'recording.wav');
 
     try {
       const response = await fetch('https://us-central1-forgotaifb.cloudfunctions.net/voiceCommand', {

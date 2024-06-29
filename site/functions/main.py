@@ -1,10 +1,12 @@
 from firebase_functions import https_fn, options
 from firebase_admin import initialize_app, credentials
 from flask import jsonify
-import logging
+from werkzeug.datastructures import FileStorage
+import os
 
 from reviewer import get_corrections
 from actions import speech_to_text, assistant_response
+
 
 cred = credentials.Certificate("fb_keys.json")
 initialize_app(cred)
@@ -28,12 +30,28 @@ def voiceCommand(request: https_fn.Request) -> https_fn.Response:
     try:
         # Retrieve the FileStorage object from the request
         file_storage = request.files['audio']
-        blob = file_storage.read()
-        text = speech_to_text(blob)
-        return https_fn.Response(text, status=200)
+        request_ip = request.remote_addr
+        request_ip = request_ip.replace(".", "-")
+        file_storage.save(f"/tmp/{request_ip}.wav")
+
+        file = open(f"/tmp/{request_ip}.wav", "rb")
+        text = speech_to_text(file)
+        print("speech to text: ", text)
+        response = assistant_response(text, ["Turn off the kitchen light", "Turn on the kitchen light", "What is the weather today?", "What is the time now?"])
+        response = jsonify({"data": response})
+        os.remove(f"/tmp/{request_ip}.wav")
+        return response
     except KeyError:
+        try:
+            os.remove(f"/tmp/{request_ip}.wav")
+        except:
+            pass
         return https_fn.Response("Audio file not found in request", status=400)
     except Exception as e:
+        try:
+            os.remove(f"/tmp/{request_ip}.wav")
+        except:
+            pass
         # Log the exception
         print(f"An error occurred: {e}")
         return https_fn.Response("Internal server error", status=500)
