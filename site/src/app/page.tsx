@@ -50,11 +50,6 @@ export default function Home() {
                     </div>
                     <div className={clsx("block items-center justify-center text-center", [windowDimensions.width < 1000 ? "width-full" : "w-[40%] mr-16"])}>
                         <div className={clsx("w-full mt-8 space-y-3 justify-center items-center", [windowDimensions.width > 1000 ? "block" : "flex"])}>
-                            <div className="flex w-full h-fit items-center justify-center">
-                                <div className="p-1 w-16 h-16">
-                                    <img src="https://seeklogo.com/images/G/github-logo-7880D80B8D-seeklogo.com.png" className="w-full h-full rounded-full border-2 border-black shadow-xl cursor-pointer duration-200 hover:scale-105" onClick={() => {window.open('https://github.com/KaiSereni/fai', 'blank')}}/>
-                                </div>
-                            </div>
                             <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
                                 <div className="p-1">
                                     AI Essay Reviewer - Available Now! (Click Here)
@@ -69,15 +64,18 @@ export default function Home() {
                             </div>
                             <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">
-                                    Future project - left and right brain neural network
+                                    Natural Language Analytics - WIP
+                                </div>
+                                <img src={LAMSplash.src} className="rounded-lg"/>
+                            </div>
+                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                                <div className="p-1">
+                                    Left and right brain neural network - WIP
                                 </div>
                                 <img src={brainSplash.src} className="rounded-lg"/>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="fixed bottom-4 left-4">
-                    © Pohakoo, LLC
                 </div>
             </div>
         </>

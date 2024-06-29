@@ -25,7 +25,8 @@ def correct(request: https_fn.Request) -> https_fn.Response:
     response = jsonify({"data": corrections})
     return response
 
-@https_fn.on_request(timeout_sec=540, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
+#@https_fn.on_request(timeout_sec=30, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
+@https_fn.on_request(timeout_sec=30, enforce_app_check=False, cors=options.CorsOptions(cors_origins=["*"], cors_methods=["POST"]))
 def voiceCommand(request: https_fn.Request) -> https_fn.Response:
     MAX_FILE_SIZE = 2646000
     try:
