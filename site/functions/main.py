@@ -27,29 +27,38 @@ def correct(request: https_fn.Request) -> https_fn.Response:
 
 @https_fn.on_request(timeout_sec=540, enforce_app_check=False, cors=options.CorsOptions(cors_origins=["*"], cors_methods=["POST"]))
 def voiceCommand(request: https_fn.Request) -> https_fn.Response:
+    MAX_FILE_SIZE = 2646000
     try:
         # Retrieve the FileStorage object from the request
-        file_storage = request.files['audio']
+        file_storage = request.get_json()['audio']
+        possible_commands = request.get_json()['commands']
+        print(possible_commands)
+        length = request.content_length
+        if length > MAX_FILE_SIZE:
+            return https_fn.Response("Please send a recording no longer than 15 seconds.", status=413)
         request_ip = request.remote_addr
         request_ip = request_ip.replace(".", "-")
-        file_storage.save(f"/tmp/{request_ip}.wav")
+        save_path = f"/tmp/{request_ip}.wav"
+        file_storage.save(save_path)
+        if os.path.getsize(save_path) > MAX_FILE_SIZE:
+            os.remove(save_path)
+            return https_fn.Response("Please send a recording no longer than 15 seconds.", status=413)
 
-        file = open(f"/tmp/{request_ip}.wav", "rb")
+        file = open(save_path, "rb")
         text = speech_to_text(file)
-        print("speech to text: ", text)
-        response = assistant_response(text, ["Turn off the kitchen light", "Turn on the kitchen light", "What is the weather today?", "What is the time now?"])
+        response = assistant_response(text, possible_actions=possible_commands)
         response = jsonify({"data": response})
-        os.remove(f"/tmp/{request_ip}.wav")
+        os.remove(save_path)
         return response
     except KeyError:
         try:
-            os.remove(f"/tmp/{request_ip}.wav")
+            os.remove(save_path)
         except:
             pass
         return https_fn.Response("Audio file not found in request", status=400)
     except Exception as e:
         try:
-            os.remove(f"/tmp/{request_ip}.wav")
+            os.remove(save_path)
         except:
             pass
         # Log the exception

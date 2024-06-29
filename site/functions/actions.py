@@ -42,7 +42,6 @@ def generate_logprob_options(chat_message: str) -> list[dict]:
             ],
             temperature=0.0,
             max_tokens=1,
-            top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
             logprobs=True,
@@ -99,7 +98,7 @@ def text_to_action(input_text: str, possible_actions: list[str]) -> str:
     for action in possible_actions:
         logprob_text += f"\nIf the user has indicated that they want to: {action}, return the number {i}."
         i+=1
-    logprob_text += "\nIf the user has requested an action that is not on this list, return the ? character."
+    logprob_text += "\nIf the user has requested an action that is not one of these, return the ? character."
     logprob_text += "\nIf it doesn't seem like the user made a request at all, return the * character."
     logprob_text += "\nReturn one token and nothing else."
     logprob_options = generate_logprob_options(logprob_text)
