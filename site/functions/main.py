@@ -30,8 +30,9 @@ def voiceCommand(request: https_fn.Request) -> https_fn.Response:
     MAX_FILE_SIZE = 2646000
     try:
         # Retrieve the FileStorage object from the request
-        file_storage = request.get_json()['audio']
-        possible_commands = request.get_json()['commands']
+        file_storage = request.files['audio']
+        possible_commands = request.form.get("commands")
+        possible_commands = eval(possible_commands)
         print(possible_commands)
         length = request.content_length
         if length > MAX_FILE_SIZE:

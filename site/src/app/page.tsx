@@ -61,9 +61,9 @@ export default function Home() {
                                 </div>
                                 <img src={essaySplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
                                 <div className="p-1">
-                                    WIP - Large Action Model
+                                    Large Action Model - Available Now! (Click Here)
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg"/>
                             </div>

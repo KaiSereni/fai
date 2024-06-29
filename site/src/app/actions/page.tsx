@@ -101,7 +101,7 @@ export default function Actions() {
             </button>
           </div>
           <div>
-            <button onClick={sendAudio} disabled={!audioBlob} className='p-4 rounded-lg shadow-lg duration-100 bg-gray-100 enabled:hover:bg-gray-200 disabled:text-gray-400'>
+            <button onClick={sendAudio} disabled={!audioBlob || possibleCommands.length < 2} className='p-4 rounded-lg shadow-lg duration-100 bg-gray-100 enabled:hover:bg-gray-200 disabled:text-gray-400'>
               3. Analyze Audio
             </button>
           </div>
