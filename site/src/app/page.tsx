@@ -5,6 +5,7 @@ import grid from '../../public/grid.png'
 import essaySplash from '../../public/essaySplash.png'
 import LAMSplash from '../../public/LAMSplash.png'
 import brainSplash from '../../public/leftRightSplash.png'
+import analyzeSplash from '../../public/analyzeSplash.png'
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
@@ -66,7 +67,7 @@ export default function Home() {
                                 <div className="p-1">
                                     Natural Language Analytics - WIP
                                 </div>
-                                <img src={LAMSplash.src} className="rounded-lg"/>
+                                <img src={analyzeSplash.src} className="rounded-lg"/>
                             </div>
                             <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">

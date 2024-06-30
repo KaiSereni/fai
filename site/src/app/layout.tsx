@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/nav";
 import KeyConstants from "@/components/key_constants";
-import GitHubLink from "@/components/github";
 
 const inter = Inter({ subsets: ["latin"] });
 const constants = KeyConstants();
