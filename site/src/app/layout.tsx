@@ -30,7 +30,7 @@ export default function RootLayout({
         <div className="fixed bottom-4 left-4">
             © Pohakoo, LLC
         </div>
-        <a className="fixed bottom-4 right-4 flex items-center justify-center">
+        <a className="fixed bottom-4 right-4 flex items-center justify-center" href="https://github.com/KaiSereni/fai">
             <div className="p-1 w-12 h-12">
                 <img src="https://seeklogo.com/images/G/github-logo-7880D80B8D-seeklogo.com.png" className="w-full h-full rounded-full border-2 border-black shadow-xl cursor-pointer duration-200 hover:scale-105"/>
             </div>

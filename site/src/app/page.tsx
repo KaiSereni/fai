@@ -59,7 +59,7 @@ export default function Home() {
                             </div>
                             <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
                                 <div className="p-1">
-                                    Large Action Model - Available Now! (Click Here)
+                                    Large Action Model POC - Available Now! (Click Here)
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg"/>
                             </div>
