@@ -28,7 +28,7 @@ export default function RootLayout({
         <Nav/>
         {children}
         <div className="fixed bottom-4 left-4">
-            © Pohakoo, LLC
+            © Pohakoo, LLC. Designed and coded by Kai Sereni.
         </div>
         <a className="fixed bottom-4 right-4 flex items-center justify-center" href="https://github.com/KaiSereni/fai">
             <div className="p-1 w-12 h-12">
