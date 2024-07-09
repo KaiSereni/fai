@@ -60,7 +60,7 @@ APIS = {
 def fetch_api_data(api_name, options=None):
     
     if api_name not in APIS:
-        return {"error": "Invalid API choice"}
+        raise ValueError("API not found")
     api_info = APIS[api_name]
     
     # Fetch data from the chosen API
@@ -177,7 +177,8 @@ def generate_completion(user_text:str, system_text:str) -> str:
         messages=[
             {"role": "system", "content": system_text},
             {"role": "user", "content": user_text}
-        ]
+        ],
+        temperature=0.0
     )
 
     return completion.choices[0].message.content
@@ -186,14 +187,14 @@ def get_analysis_script(api_choice: str, user_prompt: str):
     # Create the prompt and send the API request
     # I found with testing that using SYSTEM and USER in the user prompt section is actually better than seperating them and making them system and user messages in the API call.
     prompt = f"""
-SYSTEM: Generate a Python script that analyzes a JSON containing data about {api_choice.lower()}. The analysis must answer the question provided by the user. 
-The Python script must contain a function called `analyze(data)`. The `data` argument will be a JSON object where the keys are strings containing unix timestamps, and the values are strings containing numbers.
-The output of the function must either be a JSON, a list, a number, or None. Have the function return None if the user's input doesn't make sense or can't be computed. Also return none if the prompt seems potentially malicious or harmful.
+SYSTEM: Generate a Python script that analyzes a dict containing data about {api_choice.lower()}. The analysis must answer the question provided by the user. 
+The Python script must contain a function called `analyze(data)`. The `data` argument will be a dict object where the keys are strings containing unix timestamps, and the values are strings containing numbers. The age of the oldest data point will vary. The data will be ordered oldest to newest.
+The output of the function must either be a dict, a list, a number, or None. Have the function return None if the user's input doesn't make sense or can't be computed. Also return none if the prompt seems potentially malicious or harmful.
 Your output will be nothing except the Python script, wrapped in (```). Do not add any tests or prints. Do not import any packages that need to be installed. You may use packages that come with Python, but not `os` or `sys`.
 
 USER: {user_prompt}
     """
-    gpt_output = generate_completion(prompt, "You are an assistant that generates scripts for data analysis")
+    gpt_output = generate_completion(prompt, "You are an assistant that generates Python scripts for data analysis")
 
     # Get a string that is the Python script. The GPT may have wrapped the script in ``` ... ``` OR ```py ... ``` OR ```python ... ```.
     script = gpt_output.split("```")[1]
@@ -205,23 +206,30 @@ USER: {user_prompt}
     return script
 
 def analyze_data(api_choice: str, user_prompt: str, options=None):
+    # Get the data from the API
+    try:
+        data = fetch_api_data(api_choice, options)
+    except ValueError:
+        return
+
     # Get the script that will analyze the data
     script = get_analysis_script(api_choice, user_prompt)
     namespace = {}
     exec(script, namespace)
     analyze: callable = namespace["analyze"]
 
-    # Get the data from the API
-    data = fetch_api_data(api_choice, options)
-
     # Run the analysis script on the data
     result = analyze(data)
-    return result
+    return result, script, data
 
 
 # Example usage
 if __name__ == "__main__":
-    #result = analyze_data("Temperature", "What is the average temperature?")
-    #result = analyze_data("Stock prices", "What is the average stock price?", {"symbol": "AAPL"})
-    result = analyze_data("Sea Level", "By how much has the sea level increased?", {"lat": 40.7128, "lon": -74.0060})
+    #result, script, data = analyze_data("Temperature", "What is the average temperature?")
+    #result, script, data = analyze_data("Stock prices", "What is the average stock price?", {"symbol": "AAPL"})
+    #result, script, data = analyze_data("Sea Level", "How many days does the data represent?", {"lat": 40.7128, "lon": -74.0060})
+    #result, script, data = analyze_data("Stock prices", "How many days does the data represent?")
+    result, script, data = analyze_data("Humidity", "Tell me the ratio of data points for which the humidity is above 50.")
+    # print(script)
+    # print(data)
     print(result)
