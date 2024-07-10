@@ -73,6 +73,9 @@ def analytics(request: https_fn.Request) -> https_fn.Response:
     print(j)
     api_name = j["api_name"]
     prompt = j["prompt"]
-    options = j["options"]
+    try:
+        options = j["options"]
+    except KeyError:
+        options = None
     result, script, data = analyze_data(api_choice=api_name, user_prompt=prompt, options=options)
     return {"result": result, "analyzed_data": data}

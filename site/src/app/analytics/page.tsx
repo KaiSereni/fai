@@ -1,12 +1,15 @@
 "use client";
 
+import Spinner from "@/components/spinner";
+import { set } from "firebase/database";
 import { useState } from "react";
 
 export default function AutoAnalytics() {
     const [userPrompt, setUserPrompt] = useState("");
     const [selectedAPI, setSelectedAPI] = useState<undefined | "Temperature" | "Stock prices" | "Humidity" | "Sea Level">(undefined);
-    const [promptOptions, setPromptOptions] = useState<{"lat": string, "lon": string} | {"symbol": string} | {}>({});
+    const [promptOptions, setPromptOptions] = useState<{"lat": string, "lon": string, "symbol": string}>({"lat": "", "lon": "", "symbol": ""});
     const [analyticsOutput, setAnalyticsOutput] = useState<undefined | any>();
+    const [apiLoading, setApiLoading] = useState(false);
 
     const sendPrompt = async () => {
         try {
@@ -19,24 +22,32 @@ export default function AutoAnalytics() {
                 return;
             }
             // If user entered coordinates, check if they are valid
+            let sendOptions = true;
             if (selectedAPI === "Temperature" || selectedAPI === "Humidity" || selectedAPI === "Sea Level") {
-                if (promptOptions !== undefined && "lat" in promptOptions && "lon" in promptOptions) {
-                    if (isNaN(parseFloat(promptOptions["lat"])) || isNaN(parseFloat(promptOptions["lon"]))) {
-                        return;
-                    }
+                if (isNaN(parseFloat(promptOptions["lat"])) || isNaN(parseFloat(promptOptions["lon"]))) {
+                    sendOptions = false;
                 }
             }
+            // If user entered a stock symbol, check if it is valid
+            const symbolPattern = /^[A-Z]{1,5}$/;
+            if (selectedAPI === "Stock prices") {
+                if (!symbolPattern.test(promptOptions["symbol"])) {
+                    sendOptions = false;
+                }
+            }
+            setApiLoading(true);
             fetch(
                 "https://us-central1-forgotaifb.cloudfunctions.net/analytics",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
+                        "Referrer-Policy": "strict-origin-when-cross-origin"
                     },
                     body: JSON.stringify({
                         "api_name": selectedAPI,
                         "prompt": userPrompt,
-                        "options": promptOptions
+                        "options": sendOptions ? promptOptions : undefined
                     })
                 }
             )
@@ -44,6 +55,7 @@ export default function AutoAnalytics() {
             .then((j) => j["result"])
             .then((data) => {
                 setAnalyticsOutput(data);
+                setApiLoading(false);
             })
         }
         catch (error) {
@@ -56,7 +68,7 @@ export default function AutoAnalytics() {
         <div className='absolute w-full h-full bg-blue-100'>
           <div className='w-full h-fit block my-4'>
             <h1 className='text-2xl font-bold w-full justify-center items-center text-center'>Natural Language Database Analysis</h1>
-            <p className='w-full justify-center items-center text-center'>Get stats and analytics for a database of any size, without the content of the data base ever being sent to an LLM, all with natural language</p>
+            <p className='w-full justify-center items-center text-center'>Get stats and analytics for a database of any size, without the content of the database ever being sent to an LLM, all with natural language</p>
           </div>
           <div className='bg-white p-4 flex space-x-8 min-h-[50vh]'>
             <div className="block max-w-[25vw]">
@@ -89,7 +101,7 @@ export default function AutoAnalytics() {
                             <div>
                                 <input
                                     type="text"
-                                    value={""}
+                                    value={promptOptions.lat ?? ""}
                                     onChange={(e) => {
                                         setPromptOptions({ ...promptOptions, lat: e.target.value })
                                     }}
@@ -98,7 +110,7 @@ export default function AutoAnalytics() {
                                 />
                                 <input
                                     type="text"
-                                    value={""}
+                                    value={promptOptions.lon ?? ""}
                                     onChange={(e) => setPromptOptions({ ...promptOptions, lon: e.target.value })}
                                     placeholder="Longitude"
                                     className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -118,7 +130,7 @@ export default function AutoAnalytics() {
                             <div>
                                 <input
                                     type="text"
-                                    value={""}
+                                    value={promptOptions.symbol ?? ""}
                                     onChange={(e) => {
                                         if (e.target.value.trim() !== "") {
                                             setPromptOptions({ ...promptOptions, symbol: e.target.value });
@@ -159,9 +171,15 @@ export default function AutoAnalytics() {
                 <div>
                     <button
                         onClick={sendPrompt}
-                        className="mt-2 p-2 bg-blue-500 text-white rounded-md shadow-sm (AI generated this button and I love it)"
+                        className="space-x-2 flex items-center mt-2 p-2 bg-blue-500 text-white rounded-md shadow-sm (AI generated this button and I love it)"
                     >
-                        Get analytics
+                        <div>
+                            Get analytics
+                        </div>
+                        {
+                            apiLoading &&
+                            <Spinner isBlack={false} size={20}/>
+                        }
                     </button>
                 </div>
                 {

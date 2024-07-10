@@ -120,7 +120,10 @@ def fetch_stock_data(api, symbol="IBM"):
 
     response = requests.get(api["url"], params=params)
     response = response.json()
-    time_series = response['Time Series (Daily)']
+    try:
+        time_series = response['Time Series (Daily)']
+    except KeyError:
+        return result
     for date, data in time_series.items():
         if len(result) >= 30:
             break
