@@ -225,11 +225,11 @@ def analyze_data(api_choice: str, user_prompt: str, options=None):
 
 # Example usage
 if __name__ == "__main__":
-    #result, script, data = analyze_data("Temperature", "What is the average temperature?")
-    #result, script, data = analyze_data("Stock prices", "What is the average stock price?", {"symbol": "AAPL"})
-    #result, script, data = analyze_data("Sea Level", "How many days does the data represent?", {"lat": 40.7128, "lon": -74.0060})
-    #result, script, data = analyze_data("Stock prices", "How many days does the data represent?")
-    result, script, data = analyze_data("Humidity", "Tell me the ratio of data points for which the humidity is above 50.")
-    # print(script)
-    # print(data)
+    result, script, data = analyze_data("Temperature", "How much has the temperature increased over the last 3 days? Convert celsius to farenheight.", options={"lat": 44.0582, "lon": -121.3153})
+    # result, script, data = analyze_data("Stock prices", "What is the average stock price?", {"symbol": "AAPL"})
+    # result, script, data = analyze_data("Sea Level", "How many days does the data represent?", {"lat": 40.7128, "lon": -74.0060})
+    # result, script, data = analyze_data("Stock prices", "How many days does the data represent?")
+    # result, script, data = analyze_data("Humidity", "Tell me the ratio of data points for which the humidity is above 50.")
+    print(script)
+    print(data)
     print(result)

@@ -6,6 +6,7 @@ import os
 
 from reviewer import get_corrections
 from actions import speech_to_text, assistant_response
+from db_analytics import analyze_data
 
 
 cred = credentials.Certificate("fb_keys.json")
@@ -25,8 +26,7 @@ def correct(request: https_fn.Request) -> https_fn.Response:
     response = jsonify({"data": corrections})
     return response
 
-#@https_fn.on_request(timeout_sec=30, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
-@https_fn.on_request(timeout_sec=30, enforce_app_check=False, cors=options.CorsOptions(cors_origins=["*"], cors_methods=["POST"]))
+@https_fn.on_request(timeout_sec=30, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
 def voiceCommand(request: https_fn.Request) -> https_fn.Response:
     MAX_FILE_SIZE = 2646000
     try:
@@ -66,3 +66,11 @@ def voiceCommand(request: https_fn.Request) -> https_fn.Response:
         # Log the exception
         print(f"An error occurred: {e}")
         return https_fn.Response("Internal server error", status=500)
+
+@https_fn.on_request(timeout_sec=30, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
+def analytics(request: https_fn.Request) -> https_fn.Response:
+    j = request.get_json()
+    api_name = j["api_name"]
+    prompt = j["prompt"]
+    options = j["options"]
+    analyze_data(api_choice=api_name, user_prompt=prompt, options=options)
