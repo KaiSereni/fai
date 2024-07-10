@@ -150,7 +150,7 @@ export default function AutoAnalytics() {
                 </div>
                 <div>
                     Enter a question about the data returned by the API. The API will return metric units, but can convert if you ask it to. The data is real-time, but it will only go back a few days. The frequency of the data also varies.
-                    <br/>Ex: "What is the average temperature?"
+                    <br/>Ex: "What is the average temperature?", "How old is the oldest data point in hours?", "What is the average time between each data point in hours?", "List the top 3 highest Sea Levels"
                 </div>
                 <div>
                     <textarea
