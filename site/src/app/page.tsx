@@ -63,9 +63,9 @@ export default function Home() {
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
                                 <div className="p-1">
-                                    Natural Language Analytics - WIP
+                                    Natural Language Analytics POC - Available Now! (Click Here)
                                 </div>
                                 <img src={analyzeSplash.src} className="rounded-lg"/>
                             </div>

@@ -188,7 +188,7 @@ def get_analysis_script(api_choice: str, user_prompt: str):
     # I found with testing that using SYSTEM and USER in the user prompt section is actually better than seperating them and making them system and user messages in the API call.
     prompt = f"""
 SYSTEM: Generate a Python script that analyzes a dict containing data about {api_choice.lower()}. The analysis must answer the question provided by the user. 
-The Python script must contain a function called `analyze(data)`. The `data` argument will be a dict object where the keys are strings containing unix timestamps, and the values are strings containing numbers. The age of the oldest data point will vary. The data will be ordered oldest to newest.
+The Python script must contain a function called `analyze(data)`. The `data` argument will be a dict object where the keys are strings containing unix timestamps, and the values are strings containing numbers. They will always be metric units. The age of the oldest data point will vary. The data will be ordered oldest to newest.
 The output of the function must either be a dict, a list, a number, or None. Have the function return None if the user's input doesn't make sense or can't be computed. Also return none if the prompt seems potentially malicious or harmful.
 Your output will be nothing except the Python script, wrapped in (```). Do not add any tests or prints. Do not import any packages that need to be installed. You may use packages that come with Python, but not `os` or `sys`.
 

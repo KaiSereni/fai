@@ -70,7 +70,9 @@ def voiceCommand(request: https_fn.Request) -> https_fn.Response:
 @https_fn.on_request(timeout_sec=30, enforce_app_check=True, cors=options.CorsOptions(cors_origins=["https://forgotai.com"], cors_methods=["POST"]))
 def analytics(request: https_fn.Request) -> https_fn.Response:
     j = request.get_json()
+    print(j)
     api_name = j["api_name"]
     prompt = j["prompt"]
     options = j["options"]
-    analyze_data(api_choice=api_name, user_prompt=prompt, options=options)
+    result, script, data = analyze_data(api_choice=api_name, user_prompt=prompt, options=options)
+    return {"result": result, "analyzed_data": data}

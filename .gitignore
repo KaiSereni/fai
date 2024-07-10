@@ -9,3 +9,6 @@
 !/site/src/
 !/site/src/**
 site/src/components/key_constants.tsx
+**/*.log
+**/__pycache__/
+**/venv/
