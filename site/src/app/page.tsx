@@ -6,6 +6,7 @@ import essaySplash from '../../public/essaySplash.png'
 import LAMSplash from '../../public/LAMSplash.png'
 import brainSplash from '../../public/leftRightSplash.png'
 import analyzeSplash from '../../public/analyzeSplash.png'
+import scriptSplash from '../../public/ScriptSplash.png'
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="absolute block bg-gradient-to-br from-blue-400 to-blue-200 w-full h-[180vh]">
+            <div className="absolute block bg-gradient-to-br from-blue-400 to-blue-200 w-full h-[200vh]">
                 <div className="absolute h-[100vh] block top-0 left-0 flex justify-center items-center">
                     <img className="h-[98%] opacity-20" src={grid.src}/>
                 </div>
@@ -68,6 +69,12 @@ export default function Home() {
                                     Natural Language Analytics POC - Available Now! (Click Here)
                                 </div>
                                 <img src={analyzeSplash.src} className="rounded-lg"/>
+                            </div>
+                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                                <div className="p-1">
+                                    Natural Language OS Assistant POC - WIP
+                                </div>
+                                <img src={scriptSplash.src} className="rounded-lg"/>
                             </div>
                             <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">
