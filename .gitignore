@@ -3,6 +3,9 @@
 !/site/package.json
 !/site/functions/
 !/site/public/
+#!/other_scripts/
+!/other_scripts/custom_neural_nets/
+!/other_scripts/custom_neural_nets/*.py
 !/site/public/**
 !/site/functions/*.py
 !/site/functions/requirements.txt
@@ -12,3 +15,5 @@ site/src/components/key_constants.tsx
 **/*.log
 **/__pycache__/
 **/venv/
+**/image_dataset/
+site/.next/

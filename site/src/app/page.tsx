@@ -29,7 +29,7 @@ export default function Home() {
     return (
         <>
             <div className="absolute block bg-gradient-to-br from-blue-400 to-blue-200 w-full h-fit min-h-full pb-16 min-w-[420px]">
-                <div className="absolute h-[100vh] block top-0 left-0 flex justify-center items-center">
+                <div className="absolute h-[100vh] block top-0 left-0 flex justify-center items-center pointer-events-none">
                     <img className="h-[98%] opacity-20" src={grid.src}/>
                 </div>
                 <div className="w-full mt-16 flex items-center justify-center">
@@ -75,6 +75,16 @@ export default function Home() {
                                     Natural Language OS Assistant POC - WIP
                                 </div>
                                 <img src={scriptSplash.src} className="rounded-lg"/>
+                            </div>
+                            <div className="max-w-64 min-w-32 min-h-48 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                                <div className="p-1">
+                                    Self-checking code writer - WIP
+                                </div>
+                            </div>
+                            <div className="max-w-64 min-h-48 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                                <div className="p-1">
+                                    Customizable neural network trainer - WIP
+                                </div>
                             </div>
                             <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">
