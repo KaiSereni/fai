@@ -39,19 +39,19 @@ export default function Home() {
                     <h1 className={`text-3xl font-semibold ${roboto.className}`}>By Kai</h1>
                 </div>
                 <div className={"block h-full"}>
-                    <div className={clsx("w-full p-5", [windowDimensions.width > 1000 && "pl-16"])}>
+                    <div className={"w-full p-5"}>
                         <div className="h-[6.9%]">
 
                         </div>
                         <div className="font-semibold text-xl text-center mb-2">
                             ForgotAI.com - Independently Developed AI Tools<br/>that don't take peoples' jobs
                         </div>
-                        <div className={clsx("text-lg leading-7 text-center")}>
+                        <div className={"text-lg leading-7 text-center"}>
                             A bunch of AI-related projects and tools that the big AI companies forgot about. Still trying to make the domain name work. Anyway, I have things like a GPT-powered writing reviewer (not a writing rewriter, not a ghostwriter, just a writing reviewer), and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
                         </div>
                     </div>
-                    <div className={clsx("block items-center justify-center text-center width-full")}>
-                        <div className={clsx("w-full mt-8 space-y-3 justify-center items-center flex flex-wrap")}>
+                    <div className={"block items-center justify-center text-center width-full"}>
+                        <div className={"w-full mt-8 space-y-3 justify-center items-center flex flex-wrap"}>
                             <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
                                 <div className="p-1">
                                     AI Essay Reviewer - Available Now! (Click Here)
