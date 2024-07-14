@@ -28,7 +28,7 @@ export default function Home() {
 
     return (
         <>
-            <div className="absolute block bg-gradient-to-br from-blue-400 to-blue-200 w-full h-[200vh]">
+            <div className="absolute block bg-gradient-to-br from-blue-400 to-blue-200 w-full h-fit min-h-full pb-16 min-w-[420px]">
                 <div className="absolute h-[100vh] block top-0 left-0 flex justify-center items-center">
                     <img className="h-[98%] opacity-20" src={grid.src}/>
                 </div>
@@ -38,7 +38,7 @@ export default function Home() {
                 <div className="w-full flex items-center justify-center">
                     <h1 className={`text-3xl font-semibold ${roboto.className}`}>By Kai</h1>
                 </div>
-                <div className={windowDimensions.width > 1000 ? "flex h-[80%]" : "block h-full"}>
+                <div className={"block h-full"}>
                     <div className={clsx("w-full p-5", [windowDimensions.width > 1000 && "pl-16"])}>
                         <div className="h-[6.9%]">
 
@@ -46,37 +46,37 @@ export default function Home() {
                         <div className="font-semibold text-xl text-center mb-2">
                             ForgotAI.com - Independently Developed AI Tools
                         </div>
-                        <div className={clsx("text-lg leading-7", [windowDimensions.width > 1000 ? "text-start" : 'text-center'])}>
+                        <div className={clsx("text-lg leading-7 text-center")}>
                             A bunch of AI-related projects and tools that the big AI companies forgot about. Still trying to make the domain name work. Anyway, I have things like a GPT-powered writing reviewer (not a writing rewriter, not a ghostwriter, just a writing reviewer), and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
                         </div>
                     </div>
-                    <div className={clsx("block items-center justify-center text-center", [windowDimensions.width < 1000 ? "width-full" : "w-[40%] mr-16"])}>
-                        <div className={clsx("w-full mt-8 space-y-3 justify-center items-center", [windowDimensions.width > 1000 ? "block" : "flex"])}>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
+                    <div className={clsx("block items-center justify-center text-center width-full")}>
+                        <div className={clsx("w-full mt-8 space-y-3 justify-center items-center flex flex-wrap")}>
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
                                 <div className="p-1">
                                     AI Essay Reviewer - Available Now! (Click Here)
                                 </div>
                                 <img src={essaySplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
                                 <div className="p-1">
                                     Large Action Model POC - Available Now! (Click Here)
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
                                 <div className="p-1">
                                     Natural Language Analytics POC - Available Now! (Click Here)
                                 </div>
                                 <img src={analyzeSplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">
                                     Natural Language OS Assistant POC - WIP
                                 </div>
                                 <img src={scriptSplash.src} className="rounded-lg"/>
                             </div>
-                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1">
                                     Left and right brain neural network - WIP
                                 </div>
