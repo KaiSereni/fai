@@ -27,6 +27,10 @@ def generate_logprob_options(content):
                 {
                     "role": "user",
                     "content": f"Continue the string. Respond with only your best guess for the next token(s) in the string. Do not stop. The string is: {content}"
+                    # Okay, I get that this diverges from the explanation given on the website, but in order to fix it I would have had to run my own
+                    # LLM on a server, and not only are there not many good open-source LLMs as of yet, I also don't have the money to get a server
+                    # with the needed processing power. I used this solution as the OpenAI API gives logprobs, but we can't see the data stream and
+                    # the logprobs at the same time.
                 },
             ],
             temperature=0.0,

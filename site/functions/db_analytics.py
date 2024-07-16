@@ -2,6 +2,8 @@ import requests
 from datetime import datetime
 import json
 from openai import OpenAI
+import ast
+import re
 
 
 with open("oai_keys.json") as f:
@@ -22,7 +24,6 @@ client = OpenAI(
 
 WEATHER_KEY = api_keys["openweathermap"]
 STOCK_KEY = api_keys["alphavantage"]
-MAP_KEY = api_keys["tomtom"]
 
 # List of free public APIs
 APIS = {
@@ -193,7 +194,7 @@ def get_analysis_script(api_choice: str, user_prompt: str):
 SYSTEM: Generate a Python script that analyzes a dict containing data about {api_choice.lower()}. The analysis must answer the question provided by the user. 
 The Python script must contain a function called `analyze(data)`. The `data` argument will be a dict object where the keys are strings containing unix timestamps, and the values are strings containing numbers. They will always be metric units. The age of the oldest data point will vary. The data will be ordered oldest to newest.
 The output of the function must either be a dict, a list, a number, or None. Have the function return None if the user's input doesn't make sense or can't be computed. Also return none if the prompt seems potentially malicious or harmful.
-Your output will be nothing except the Python script, wrapped in (```). Do not add any tests or prints. Do not import any packages that need to be installed. You may use packages that come with Python, but not `os` or `sys`.
+Your output will be nothing except the Python script, wrapped in (```). Do not add any tests or prints. Do use any imports.
 
 USER: {user_prompt}
     """
@@ -208,6 +209,38 @@ USER: {user_prompt}
 
     return script
 
+# This function is AI-generated, didn't feel like writing a code sanetizer
+def sanitize_python_script(script: str) -> str:
+    def remove_imports(node):
+        return not isinstance(node, (ast.Import, ast.ImportFrom))
+
+    def remove_dangerous_calls(node):
+        if isinstance(node, ast.Call):
+            func = node.func
+            if isinstance(func, ast.Name):
+                dangerous_functions = {'eval', 'exec', 'open', '__import__', 'globals', 'locals', 'getattr', 'setattr', 'delattr'}
+                return func.id not in dangerous_functions
+            elif isinstance(func, ast.Attribute):
+                dangerous_methods = {'read', 'write', 'delete', 'remove', 'system', 'popen', 'subprocess'}
+                return func.attr not in dangerous_methods
+        return True
+
+    tree = ast.parse(script)
+
+    tree = ast.fix_missing_locations(ast.NodeTransformer().visit(tree))
+    tree.body = [node for node in tree.body if remove_imports(node)]
+    tree = ast.fix_missing_locations(ast.NodeTransformer().generic_visit(tree))
+
+    tree = ast.fix_missing_locations(ast.NodeTransformer().generic_visit(tree))
+    tree.body = [node for node in tree.body if remove_dangerous_calls(node)]
+
+    sanitized_script = ast.unparse(tree)
+
+    dangerous_patterns = r'\b(eval|exec|open|__import__|globals|locals|getattr|setattr|delattr)\s*\('
+    sanitized_script = re.sub(dangerous_patterns, 'safe_\g<1>(', sanitized_script)
+
+    return sanitized_script
+
 def analyze_data(api_choice: str, user_prompt: str, options=None):
     # Get the data from the API
     try:
@@ -217,6 +250,7 @@ def analyze_data(api_choice: str, user_prompt: str, options=None):
 
     # Get the script that will analyze the data
     script = get_analysis_script(api_choice, user_prompt)
+    script = sanitize_python_script(script)
     namespace = {}
     exec(script, namespace)
     analyze: callable = namespace["analyze"]

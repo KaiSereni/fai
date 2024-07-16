@@ -7,7 +7,7 @@ import LAMSplash from '../../public/LAMSplash.png'
 import brainSplash from '../../public/leftRightSplash.png'
 import analyzeSplash from '../../public/analyzeSplash.png'
 import scriptSplash from '../../public/ScriptSplash.png'
-import clsx from "clsx";
+import KeyConstants from "@/components/key_constants";
 import { useEffect, useState } from "react";
 
 const roboto = Roboto({ weight: '300', preload: false});
@@ -15,14 +15,35 @@ const roboto = Roboto({ weight: '300', preload: false});
 export default function Home() {
 
     const [windowDimensions, setWindowDimensions] = useState<{width: number, height: number}>({width: 0, height: 0});
+    const firebaseConfig = KeyConstants()["firebase_config"];
+    const firebaseScript =  `
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "${firebaseConfig.apiKey}",
+            authDomain: "${firebaseConfig.authDomain}",
+            projectId: "${firebaseConfig.projectId}",
+            storageBucket: "${firebaseConfig.storageBucket}",
+            messagingSenderId: "${firebaseConfig.messagingSenderId}",
+            appId: "${firebaseConfig.appId}",
+            measurementId: "${firebaseConfig.measurementId}"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    `
 
     useEffect(() => {
-        function handleResize() {
-            setWindowDimensions({width: window.innerWidth, height: window.innerHeight});
-        }
-
+        const handleResize = () => {setWindowDimensions({width: window.innerWidth, height: window.innerHeight})}
         handleResize();
         window.addEventListener('resize', handleResize);
+        
+        const script = document.createElement("script")
+        script.innerHTML = firebaseScript;
+        console.log(script.innerHTML)
+        script.type = "module"
+        document.head.appendChild(script);
         return () => window.removeEventListener('resize', handleResize);
     }, [])
 
@@ -47,14 +68,14 @@ export default function Home() {
                             ForgotAI.com - Independently Developed AI Tools<br/>that don't take peoples' jobs
                         </div>
                         <div className={"text-lg leading-7 text-center"}>
-                            A bunch of AI-related projects and tools that the big AI companies forgot about. Still trying to make the domain name work. Anyway, I have things like a GPT-powered writing reviewer (not a writing rewriter, not a ghostwriter, just a writing reviewer), and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
+                            A bunch of AI-related projects and tools that the big AI companies forgot about. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
                         </div>
                     </div>
                     <div className={"block items-center justify-center text-center width-full"}>
                         <div className={"w-full mt-8 space-y-3 justify-center items-center flex flex-wrap"}>
                             <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
                                 <div className="p-1">
-                                    AI Essay Reviewer - Available Now! (Click Here)
+                                    AI Writing Reviewer - Available Now! (Click Here)
                                 </div>
                                 <img src={essaySplash.src} className="rounded-lg"/>
                             </div>

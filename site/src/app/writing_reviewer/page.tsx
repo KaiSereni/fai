@@ -69,7 +69,7 @@ export default function Essay() {
                     AI Writing Reviewer Online
                 </div>
                 <div className="text-sm w-2/3 my-2">
-                    Want to write your own essay, but have ChatGPT look over it before you click send? Use this tool to get detailed annotation showing which word choices AI likes and doesn't like. Click to get suggestions for alternate word choices. <br/> <div className="font-bold mt-1">How does it work?</div>Large Language Models (like ChatGPT) work by taking the text it already sent, and deciding what the next word should be. This process is repeated until you have a full response. For each word in your essay, this tool asks the GPT to predict that word based on the previous text. If it predicts the word you chose with a high confidence, that means the GPT thinks you made a good word choice.<br/>
+                    Want to write stuff yourself, but have ChatGPT look over it before you click send? Use this tool to get detailed annotation showing which word choices AI likes and doesn't like. Click to get suggestions for alternate word choices. <br/> <div className="font-bold mt-1">How does it work?</div>Large Language Models (like ChatGPT) work by taking the text it already sent, and deciding what the next word should be. This process is repeated until you have a full response. For each word in your writing, this tool asks the GPT to predict that word based on the previous text. If it predicts the word you chose with a high confidence, that means the GPT thinks you made a good word choice.<br/>
                 </div>
             </div>
             {
@@ -95,7 +95,7 @@ export default function Essay() {
                         <textarea
                             name="essay-title"
                             className={clsx("w-full h-[2em] bg-gray-50 pl-4 py-1 shadow-md", [outputList !== false && "text-gray-700"])}
-                            placeholder="Title of your essay..."
+                            placeholder="Title/Context"
                             style={{resize: "none", accentColor: 'transparent', pointerEvents: outputList !== false ? "none" : 'unset', overflow: "hidden"}}
                             value={enteredTitle}
                             onInput={(ev) => {
@@ -107,7 +107,7 @@ export default function Essay() {
                         <textarea 
                             name="essay-input"
                             className={clsx("w-full h-[50%] bg-gray-50 p-4 shadow-md", [outputList !== false && "text-gray-700"])} 
-                            placeholder="Paste your essay here..." 
+                            placeholder="Paste your writing here..." 
                             style={{resize: 'vertical', accentColor: 'transparent', pointerEvents: outputList !== false ? "none" : 'unset'}}
                             value={enteredText}
                             onInput={(ev) => {
