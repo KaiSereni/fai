@@ -4,11 +4,6 @@ import { useEffect, useState } from "react";
 import Spinner from "@/components/spinner";
 import clsx from "clsx";
 import copy from '../../../public/copyClipboard.svg'
-import { getFunctions } from 'firebase/functions';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getPerformance } from "firebase/performance";
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import KeyConstants from "@/components/key_constants";
 
 interface correctionsList {
@@ -20,34 +15,38 @@ interface correctionsList {
 }
 
 export default function Essay() {
+    
+    const firebaseConfig = KeyConstants()["firebase_config"];
+    const firebaseScript =  `
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "${firebaseConfig.apiKey}",
+            authDomain: "${firebaseConfig.authDomain}",
+            projectId: "${firebaseConfig.projectId}",
+            storageBucket: "${firebaseConfig.storageBucket}",
+            messagingSenderId: "${firebaseConfig.messagingSenderId}",
+            appId: "${firebaseConfig.appId}",
+            measurementId: "${firebaseConfig.measurementId}"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    `
+
+    useEffect(() => {
+        const script = document.createElement("script")
+        script.innerHTML = firebaseScript;
+        console.log(script.innerHTML)
+        script.type = "module"
+        document.head.appendChild(script);
+    }, [])
 
     const [enteredText, setEnteredText] = useState<string>("");
     const [enteredTitle, setEnteredTitle] = useState<string>("");
     const [outputList, setOutputList] = useState<boolean | string | correctionsList[]>(false);
     const [clickedToken, setClickedToken] = useState<number | undefined>(undefined);
-
-    const [app, setApp] = useState<any>(undefined);
-    const [functions, setFunctions] = useState<any>(undefined);
-    const [appCheck, setAppCheck] = useState<any>(undefined);
-
-    const firebaseConfig = KeyConstants()["firebase_config"];
-
-    useEffect(() => {
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const perf = getPerformance(app);
-        const functions = getFunctions(app);
-        if (process.env.NODE_ENV !== 'development') {
-            const appCheck = initializeAppCheck(app, {
-                provider: new ReCaptchaV3Provider(KeyConstants()["recaptcha"]),
-                isTokenAutoRefreshEnabled: true
-            });
-        }
-
-        setApp(app);
-        setFunctions(functions);
-        setAppCheck(appCheck);
-    }, []);
 
     useEffect(() => {
         const docClicked = (e : MouseEvent) => {

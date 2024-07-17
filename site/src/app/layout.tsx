@@ -27,14 +27,16 @@ export default function RootLayout({
       <body className={inter.className}>
         <Nav/>
         {children}
-        <div className="fixed bottom-4 left-4 max-w-[75vw] pointer-events-none">
-            © Pohakoo, LLC. Designed and coded by Kai Sereni.
+        <div className="fixed bottom-0 min-h-12 h-fit bg-white w-full flex items-center">
+          <div className="ml-4 max-w-[75vw] pointer-events-none">
+              © Pohakoo, LLC. Designed and coded by Kai Sereni.
+          </div>
+          <a className="ml-auto" href="https://github.com/KaiSereni/fai">
+              <div className="p-2 w-12 h-12">
+                  <img src="https://seeklogo.com/images/G/github-logo-7880D80B8D-seeklogo.com.png" className="w-full h-full rounded-full shadow-xl cursor-pointer duration-200 hover:scale-105"/>
+              </div>
+          </a>
         </div>
-        <a className="fixed bottom-4 right-4 flex items-center justify-center" href="https://github.com/KaiSereni/fai">
-            <div className="p-1 w-12 h-12">
-                <img src="https://seeklogo.com/images/G/github-logo-7880D80B8D-seeklogo.com.png" className="w-full h-full rounded-full border-2 border-black shadow-xl cursor-pointer duration-200 hover:scale-105"/>
-            </div>
-        </a>
       </body>
     </html>
   );
