@@ -75,6 +75,11 @@ export default function Home() {
                                 </div>
                                 <img src={brainSplash.src} className="rounded-lg"/>
                             </div>
+                            <div className="max-w-full mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
+                                <div className="p-1">
+                                    Video translator/redubber - WIP
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

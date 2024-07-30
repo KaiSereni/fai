@@ -17,11 +17,11 @@ client = OpenAI(
 
 def generate_completion(system_text:str, user_text:str) -> str:
     completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": system_text},
-        {"role": "user", "content": user_text}
-    ]
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": system_text},
+            {"role": "user", "content": user_text}
+        ]
     )
 
     return completion.choices[0].message.content
