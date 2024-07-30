@@ -1,74 +1,92 @@
 import json
-import speech_recognition as sr
+import librosa
 from pydub import AudioSegment
-from pydub.silence import split_on_silence
-from pyAudioAnalysis import audioSegmentation as aS
-import numpy as np
+import speech_recognition as speech_rec
 from pyannote.audio import Pipeline
+from transformers import Wav2Vec2ForSequenceClassification, Wav2Vec2FeatureExtractor
 import torch
+import soundfile as sf
 
-def mp3_to_json(mp3_path):
-    # Load the MP3 file
-    audio = AudioSegment.from_mp3(mp3_path)
+with open('api_keys.json') as f:
+    HF_TOKEN = json.load(f)['huggingface']
 
-    # Convert to WAV for compatibility with pyannote
-    wav_path = "temp_full_audio.wav"
-    audio.export(wav_path, format="wav")
+def classify_gender(wav_path):
+    # Load the pre-trained model and feature extractor
+    model = Wav2Vec2ForSequenceClassification.from_pretrained("alefiury/wav2vec2-large-xlsr-53-gender-recognition-librispeech")
+    feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained("alefiury/wav2vec2-large-xlsr-53-gender-recognition-librispeech")
 
-    # Initialize speaker diarization pipeline
-    pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization@2.1", use_auth_token="YOUR_HF_AUTH_TOKEN")
+    # Load the audio file and resample to 16,000 Hz
+    speech, original_sample_rate = sf.read(wav_path)
+    if original_sample_rate != 16000:
+        speech = librosa.resample(speech, orig_sr=original_sample_rate, target_sr=16000)
 
-    # Perform speaker diarization
-    diarization = pipeline(wav_path)
+    # Preprocess the audio file
+    inputs = feature_extractor(speech, sampling_rate=16000, return_tensors="pt", padding=True)
 
-    # Initialize recognizer
-    recognizer = sr.Recognizer()
+    # Perform inference
+    with torch.no_grad():
+        logits = model(**inputs).logits
 
+    # Get the predicted class
+    predicted_class_id = logits.argmax().item()
+
+    # Map the predicted class ID to gender
+    gender = "male" if predicted_class_id == 0 else "female"
+
+    return gender
+
+def extract_speech_to_text(wav_file):
+    recognizer = speech_rec.Recognizer()
+    audio = AudioSegment.from_wav(wav_file)
+
+    pipeline_speaker = Pipeline.from_pretrained("pyannote/speaker-diarization", use_auth_token=HF_TOKEN)
+    diarization = pipeline_speaker(wav_file)
+
+    speaker_genders = {}
     results = []
-    speaker_ids = {}
-    current_speaker_id = 1
-
     for turn, _, speaker in diarization.itertracks(yield_label=True):
+        # Extract speaker ID
+        speaker_id = int(speaker.split("_")[1])
+
         # Extract the audio segment for this turn
         start_time = turn.start
         end_time = turn.end
-        segment = audio[int(start_time * 1000):int(end_time * 1000)]
+        if end_time - start_time < 1:
+            continue
+        segment = audio[start_time*1000:end_time*1000]
 
-        # Export segment to WAV
-        segment_path = f"temp_segment_{start_time}_{end_time}.wav"
-        segment.export(segment_path, format="wav")
+        # Export segment to a temporary file
+        segment.export("temp/temp.wav", format="wav")
 
-        # Recognize speech in segment
-        with sr.AudioFile(segment_path) as source:
+        # Perform speech recognition on the segment
+        with speech_rec.AudioFile("temp/temp.wav") as source:
+            # Recognizer
             audio_data = recognizer.record(source)
             try:
                 text = recognizer.recognize_google(audio_data)
+                if text == "":
+                    continue
+            except speech_rec.UnknownValueError:
+                continue
 
-                # Detect gender
-                [_, _, _, gender] = aS.speech_gender_segmentation(segment_path, 1.0, 1.0)
-                gender_label = "masculine" if np.mean(gender) > 0.5 else "feminine"
+        # Determine gender
+        if speaker_id in speaker_genders:
+            gender = speaker_genders[speaker_id]
+        else:
+            gender = classify_gender("temp/temp.wav")
 
-                # Assign speaker label
-                if speaker not in speaker_ids:
-                    speaker_ids[speaker] = f"speaker_{current_speaker_id}"
-                    current_speaker_id += 1
-                speaker_label = speaker_ids[speaker]
-
-                # Add result to list
-                results.append({
-                    "text": text,
-                    "start_time": round(start_time, 1),
-                    "end_time": round(end_time, 1),
-                    "gender": gender_label,
-                    "speaker": speaker_label
-                })
-
-            except sr.UnknownValueError:
-                print(f"Speech not recognized in segment {start_time}-{end_time}")
-            except sr.RequestError as e:
-                print(f"Could not request results from Google Speech Recognition service; {e}")
+        # Add result to list
+        result = {
+            "text": text,
+            "start_time": start_time,
+            "end_time": end_time,
+            "speaker_id": speaker_id,
+            "gender": gender
+        }
+        results.append(result)
 
     return results
 
-# Example usage
-print(mp3_to_json("input_audio.mp3"))
+# Usage
+stt = extract_speech_to_text("input_audio.wav")
+print(stt)
