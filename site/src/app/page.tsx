@@ -7,6 +7,7 @@ import LAMSplash from '../../public/LAMSplash.png'
 import brainSplash from '../../public/leftRightSplash.png'
 import analyzeSplash from '../../public/analyzeSplash.png'
 import scriptSplash from '../../public/ScriptSplash.png'
+import translateSplash from '../../public/translateSplash.png'
 import KeyConstants from "@/components/key_constants";
 import { useEffect, useState } from "react";
 
@@ -84,6 +85,12 @@ export default function Home() {
                                     Large Action Model POC - Available Now! (Click Here)
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg"/>
+                            </div>
+                            <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/Video-Translator', 'blank')}}>
+                                <div className="p-1">
+                                    Video Translator/Redubber - Available Now! (Click Here)
+                                </div>
+                                <img src={translateSplash.src} className="rounded-lg"/>
                             </div>
                             <div className="max-w-64 min-w-32 mx-2 rounded-lg bg-blue-400 shadow-md duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
                                 <div className="p-1">
