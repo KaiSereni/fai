@@ -1,5 +1,6 @@
 "use client";
 
+import FAIButton from "@/components/button";
 import Spinner from "@/components/spinner";
 import { set } from "firebase/database";
 import { useState } from "react";
@@ -150,7 +151,7 @@ export default function AutoAnalytics() {
                 </div>
                 <div>
                     Enter a question about the data returned by the API. The API will return metric units, but can convert if you ask it to. The data is real-time, but it will only go back a few days. The frequency of the data also varies.
-                    <br/>Ex: "What is the average temperature?", "How old is the oldest data point in hours?", "What is the average time between each data point in hours?", "List the top 3 highest Sea Levels"
+                    <br/><div className="text-gray-800 text-sm py-1">Ex: "What is the average temperature?", "How old is the oldest data point in hours?", "What is the average time between each data point in hours?", "List the top 3 highest Sea Levels", "List the derivatives of each data point"</div>
                 </div>
                 <div>
                     <textarea
@@ -168,10 +169,11 @@ export default function AutoAnalytics() {
                 <div>
                     Click the button below to get the analytics for the prompt you entered. The model will return the answer to your question in a few seconds. It will also send back the data that was analyzed in the request, which you can view in the network inspector.
                 </div>
-                <div>
-                    <button
-                        onClick={sendPrompt}
-                        className="space-x-2 flex items-center mt-2 p-2 bg-blue-500 text-white rounded-md shadow-sm (AI generated this button and I love it)"
+                <div className="py-2">
+                    <FAIButton
+                        clickHandler={sendPrompt}
+                        width={2}
+                        height={2}
                     >
                         <div>
                             Get analytics
@@ -180,7 +182,7 @@ export default function AutoAnalytics() {
                             apiLoading &&
                             <Spinner isBlack={false} size={20}/>
                         }
-                    </button>
+                    </FAIButton>
                 </div>
                 {
                     analyticsOutput !== undefined && (

@@ -1,5 +1,6 @@
 "use client";
 
+import FAIButton from '@/components/button';
 import Spinner from '@/components/spinner';
 import { set } from 'firebase/database';
 import React, { useState, useRef } from 'react';
@@ -86,12 +87,14 @@ export default function Actions() {
               possibleCommands.length === 0 &&
               <div className='mb-4 block'>
                 <div>
-                  <button 
-                    className='py-1 px-2 rounded-lg shadow-lg duration-100 bg-gray-100 enabled:hover:bg-gray-200 disabled:text-gray-400'
-                    onClick={() => setPossibleCommands(['0. Open the spaceship door', '1. Give my spaceship a bath', '2. Plot a course to Mars', '3. Plot a course to Venus'])}
+                  <FAIButton 
+                    clickHandler={
+                      () => {setPossibleCommands(['0. Open the spaceship door', '1. Give my spaceship a bath', '2. Plot a course to Mars', '3. Plot a course to Venus'])}
+                    }
+                    style='secondary'
                   >
-                    Click to use an example command list
-                  </button>
+                    Use an example command list
+                  </FAIButton>
                 </div>
               </div>
             }
@@ -110,27 +113,34 @@ export default function Actions() {
                 ))}
               </ul>
             </div>
-            <button className='absolute py-1 px-2 rounded-lg shadow-lg duration-100 bg-gray-100 hover:bg-gray-200 bottom-0' onClick={() => {
-              setPossibleCommands([]);
-            }}>
-              Clear command list
-            </button>
+            <div className='absolute bottom-0'>
+              <FAIButton 
+                clickHandler={() => {
+                  setPossibleCommands([]);
+                }}
+                height={1}
+                width={2}
+                style='secondary'
+              >
+                Clear command list
+              </FAIButton>
+            </div>
         </div>
         <div className='block space-y-4'>
           <div>
             <div className='max-w-64 mb-2'>
               2. Record a command using your microphone. Ask the model to perform one of the commands you defined in the previous step in natural language. Rephrase the command to see if the model can tell what you're asking.
             </div>
-            <button onClick={recording ? stopRecording : startRecording} disabled={possibleCommands.length < 2} className='p-4 rounded-lg shadow-lg duration-100 bg-gray-100 enabled:hover:bg-gray-200 disabled:text-gray-400'>
+            <FAIButton clickHandler={recording ? stopRecording : startRecording} disabled={possibleCommands.length < 2} style='secondary'>
               {recording ? 'Stop Recording' : audioBlob ? 'Re-record voice command' : 'Record a voice command'}
-            </button>
+            </FAIButton>
           </div>
         </div>
           <div className='block space-y-4'>
             <div>
-              <button onClick={sendAudio} disabled={!audioBlob || possibleCommands.length < 2} className='p-4 rounded-lg shadow-lg duration-100 bg-gray-100 enabled:hover:bg-gray-200 disabled:text-gray-400'>
+              <FAIButton clickHandler={sendAudio} disabled={!audioBlob || possibleCommands.length < 2} style='primary'>
                 3. Analyze Audio
-              </button>
+              </FAIButton>
             </div>
             {responseLoading && <div className='flex space-x-2'><Spinner isBlack size={20}/><div>Processing audio...</div></div>}
             {audioBlob && (

@@ -5,6 +5,7 @@ import Spinner from "@/components/spinner";
 import clsx from "clsx";
 import copy from '../../../public/copyClipboard.svg'
 import KeyConstants from "@/components/key_constants";
+import FAIButton from "@/components/button";
 
 interface correctionsList {
     corrections: {
@@ -93,7 +94,7 @@ export default function Essay() {
                     <>
                         <textarea
                             name="essay-title"
-                            className={clsx("w-full h-[2em] bg-gray-50 pl-4 py-1 shadow-md", [outputList !== false && "text-gray-700"])}
+                            className={clsx("w-full h-[2em] bg-gray-50 pl-4 py-1 shadow", [outputList !== false && "text-gray-700"])}
                             placeholder="Title/Context"
                             style={{resize: "none", accentColor: 'transparent', pointerEvents: outputList !== false ? "none" : 'unset', overflow: "hidden"}}
                             value={enteredTitle}
@@ -105,7 +106,7 @@ export default function Essay() {
                         />
                         <textarea 
                             name="essay-input"
-                            className={clsx("w-full h-[50%] bg-gray-50 p-4 shadow-md", [outputList !== false && "text-gray-700"])} 
+                            className={clsx("w-full h-[50%] bg-gray-50 p-4 shadow", [outputList !== false && "text-gray-700"])} 
                             placeholder="Paste your writing here..." 
                             style={{resize: 'vertical', accentColor: 'transparent', pointerEvents: outputList !== false ? "none" : 'unset'}}
                             value={enteredText}
@@ -168,7 +169,7 @@ export default function Essay() {
 
                                             {
                                                 clickedToken === index &&
-                                                <div className="absolute block bg-blue-200 w-fit h-fit my-1 shadow-lg rounded">
+                                                <div className="absolute block bg-blue-200 w-fit h-fit my-1 shadow rounded">
                                                     <div className="p-1">Agreement: {confidence}</div>
                                                     {corrections.map((correctionObject, correctionIndex) => {
                                                         if (correctionObject['prob'] < 0.1) {
@@ -189,58 +190,61 @@ export default function Essay() {
                         </div>
                     </div>
                 }
-                <div className="w-full flex">
-                    <div
-                        className={clsx("bg-blue-300 h-min py-2 px-4 m-4 mr-2 font-semibold rounded-2xl shadow-lg cursor-pointer duration-200", [outputList === false ? "hover:bg-blue-400 hover:scale-95 hover:shadow-none" : "bg-blue-300 scale-95 shadow-none text-gray-700"])}
-                        onClick={
-                            () => {
-                                setOutputList(true);
-                                try {
-                                    fetch(
-                                        "https://us-central1-forgotaifb.cloudfunctions.net/correct",
-                                        {
-                                            method: "POST",
-                                            headers: {
-                                                "Content-Type": "application/json",
-                                                "Access-Control-Allow-Origin": "https://forgotai.com",
-                                            },
-                                            body: JSON.stringify({
-                                                "data":
-                                                {
-                                                    "string": enteredText,
-                                                    "context_title": enteredTitle
-                                                }
-                                            })
-                                        }
-                                    )
-                                    .then((response) => response.json())
-                                    .then((j) => j["data"])
-                                    .then((data) => {
-                                        setOutputList(normalizeProbabilities(data));
-                                    })
+                <div className="w-full flex pl-4 space-x-2">
+                    <div className="py-2">
+                        <FAIButton
+                            clickHandler={
+                                () => {
+                                    setOutputList(true);
+                                    try {
+                                        fetch(
+                                            "https://us-central1-forgotaifb.cloudfunctions.net/correct",
+                                            {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                    "Access-Control-Allow-Origin": "https://forgotai.com",
+                                                },
+                                                body: JSON.stringify({
+                                                    "data":
+                                                    {
+                                                        "string": enteredText,
+                                                        "context_title": enteredTitle
+                                                    }
+                                                })
+                                            }
+                                        )
+                                        .then((response) => response.json())
+                                        .then((j) => j["data"])
+                                        .then((data) => {
+                                            setOutputList(normalizeProbabilities(data));
+                                        })
+                                    }
+                                    catch (error) {
+                                        console.log("error getting correctionz");
+                                        console.error(error);
+                                        setOutputList('e');
+                                    }
                                 }
-                                catch (error) {
-                                    console.log("error getting correctionz");
-                                    console.error(error);
-                                    setOutputList('e');
-                                }
-                            }
-                    }
-                    >
-                        <div className="flex items-center justify-center">
-                            {outputList === true && <Spinner isBlack={true}/>}
-                            {outputList === true ? <div className="ml-2">Calculating...</div> : outputList === false ? <div>Calculate</div> : outputList === 'e' ? <div>Server error. Try shortening the input.</div> : <div>Done!</div>}
-                        </div>
+                        }
+                        >
+                            <div className="flex items-center justify-center">
+                                {outputList === true && <Spinner/>}
+                                {outputList === true ? <div className="ml-2">Calculating...</div> : outputList === false ? <div>Calculate</div> : outputList === 'e' ? <div>Server error. Try shortening the input.</div> : <div>Done!</div>}
+                            </div>
+                        </FAIButton>
                     </div>
-                    <div
-                        className={clsx("bg-blue-200 h-min py-2 px-4 my-4 font-semibold rounded-2xl shadow-lg cursor-pointer duration-200 hover:bg-blue-300 hover:scale-95 hover:shadow-none")}
-                        onClick={() => {
-                            setOutputList(false);
-                            setEnteredTitle("");
-                            setEnteredText("");
-                        }}
-                    >
-                        Clear workspace
+                    <div className="py-2">
+                        <FAIButton
+                            style="secondary"
+                            clickHandler={() => {
+                                setOutputList(false);
+                                setEnteredTitle("");
+                                setEnteredText("");
+                            }}
+                        >
+                            Clear workspace
+                        </FAIButton>
                     </div>
                 </div>
             </div>
