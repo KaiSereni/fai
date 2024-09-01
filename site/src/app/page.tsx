@@ -69,7 +69,7 @@ export default function Home() {
                             ForgotAI.com - Independently Developed AI Tools<br/>that don't take peoples' jobs
                         </div>
                         <div className={"text-base sm:text-lg leading-6 sm:leading-7 text-center"}>
-                            A bunch of AI-related projects and tools that the big AI companies forgot about. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
+                            AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive projects, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), a video redubber, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
                         </div>
                     </div>
                     <div className={"block items-center justify-center text-center width-full"}>
@@ -106,7 +106,7 @@ export default function Home() {
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 min-h-48 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1 text-sm sm:text-base">
-                                    Self-checking code writer - WIP
+                                    Self-checking code writer/unsupervised code model fine tuning - WIP
                                 </div>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-h-48 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
