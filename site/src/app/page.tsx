@@ -8,6 +8,7 @@ import brainSplash from '../../public/leftRightSplash.png'
 import analyzeSplash from '../../public/analyzeSplash.png'
 import scriptSplash from '../../public/ScriptSplash.png'
 import translateSplash from '../../public/translateSplash.png'
+import easyai from '../../public/easyai.png'
 import KeyConstants from "@/components/key_constants";
 import { useEffect, useState } from "react";
 
@@ -76,42 +77,43 @@ export default function Home() {
                         <div className={"w-full mt-4 sm:mt-8 space-y-3 justify-center items-center flex flex-wrap"}>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
                                 <div className="p-1 text-sm sm:text-base">
-                                    AI Writing Reviewer - Available Now! (Click Here)
+                                    AI Writing Reviewer - Available Now!
                                 </div>
                                 <img src={essaySplash.src} className="rounded-lg w-full" alt="Writing Reviewer"/>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
                                 <div className="p-1 text-sm sm:text-base">
-                                    Large Action Model POC - Available Now! (Click Here)
+                                    Large Action Model POC - Available Now!
                                 </div>
                                 <img src={LAMSplash.src} className="rounded-lg w-full" alt="Large Action Model"/>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/Video-Translator', 'blank')}}>
                                 <div className="p-1 text-sm sm:text-base">
-                                    Video Translator/Redubber - Available Now! (Click Here)
+                                    Video Translator/Redubber - Available Now!
                                 </div>
                                 <img src={translateSplash.src} className="rounded-lg w-full" alt="Video Translator"/>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
                                 <div className="p-1 text-sm sm:text-base">
-                                    Natural Language Analytics POC - Available Now! (Click Here)
+                                    Natural Language Analytics POC - Available Now!
                                 </div>
                                 <img src={analyzeSplash.src} className="rounded-lg w-full" alt="Natural Language Analytics"/>
                             </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/os-assistant')}}>
+                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/os-assistant', '_blank')}}>
                                 <div className="p-1 text-sm sm:text-base">
-                                    Natural Language OS Assistant POC - Available Now! (Click Here)
+                                    Natural Language OS Assistant POC - Available Now!
                                 </div>
                                 <img src={scriptSplash.src} className="rounded-lg w-full" alt="OS Assistant"/>
+                            </div>
+                            <div className="w-full sm:w-auto max-w-64 min-h-48 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/easyai', '_blank')}}>
+                                <div className="p-1 text-sm sm:text-base">
+                                    Customizable neural network trainer - Available Now!
+                                </div>
+                                <img src={easyai.src} className="rounded-lg w-full" alt="easyai"/>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 min-h-48 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
                                 <div className="p-1 text-sm sm:text-base">
                                     Self-checking code writer/unsupervised code model fine tuning - WIP
-                                </div>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-h-48 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
-                                <div className="p-1 text-sm sm:text-base">
-                                    Customizable neural network trainer - WIP
                                 </div>
                             </div>
                             <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
