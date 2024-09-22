@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 const constants = KeyConstants();
 
 export const metadata: Metadata = {
-  title: "AI Writing Reviewer - Review Word Choices with AI",
-  description: "Get AI to review your word choices from your writing. GPT AI-powered essay tool for homework, emails, business, AI, keywords, keywords, keywords, GPT-4o, GPT-4, GPT-3.5, ChatGPT, homework bot, free Robux.",
+  title: "Kai's AI projects - Pohakoo",
+  description: "Get AI to review your word choices from your writing. Generate your own neural network. Try an AI-powered Siri. Get natural-language analytics.",
 };
 
 export default function RootLayout({
