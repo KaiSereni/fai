@@ -1,24 +1,24 @@
 "use client";
 
 import { Roboto } from "next/font/google";
-import grid from '../../public/grid.png'
-import essaySplash from '../../public/essaySplash.png'
-import LAMSplash from '../../public/LAMSplash.png'
-import brainSplash from '../../public/leftRightSplash.png'
-import analyzeSplash from '../../public/analyzeSplash.png'
-import scriptSplash from '../../public/ScriptSplash.png'
-import translateSplash from '../../public/translateSplash.png'
-import easyai from '../../public/easyai.png'
+import grid from '@/../public/grid.svg'
+import essaySplash from '../../public/essaySplash.png';
+import LAMSplash from '../../public/LAMSplash.png';
+import brainSplash from '../../public/leftRightSplash.png';
+import analyzeSplash from '../../public/analyzeSplash.png';
+import scriptSplash from '../../public/ScriptSplash.png';
+import codingSelfSupervised from '../../public/codingSelfSupervisedSplash.png';
+import translateSplash from '../../public/translateSplash.png';
+import easyai from '../../public/easyai.png';
 import KeyConstants from "@/components/key_constants";
 import { useEffect, useState } from "react";
 
-const roboto = Roboto({ weight: '300', preload: false});
+const roboto = Roboto({ weight: '300', preload: false });
 
 export default function Home() {
-
-    const [windowDimensions, setWindowDimensions] = useState<{width: number, height: number}>({width: 0, height: 0});
+    const [windowDimensions, setWindowDimensions] = useState<{ width: number, height: number }>({ width: 0, height: 0 });
     const firebaseConfig = KeyConstants()["firebase_config"];
-    const firebaseScript =  `
+    const firebaseScript = `
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
 
@@ -34,98 +34,61 @@ export default function Home() {
 
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-    `
+    `;
 
     useEffect(() => {
-        const handleResize = () => {setWindowDimensions({width: window.innerWidth, height: window.innerHeight})}
+        const handleResize = () => { setWindowDimensions({ width: window.innerWidth, height: window.innerHeight }) };
         handleResize();
         window.addEventListener('resize', handleResize);
-        
-        const script = document.createElement("script")
+
+        const script = document.createElement("script");
         script.innerHTML = firebaseScript;
-        console.log(script.innerHTML)
-        script.type = "module"
+        script.type = "module";
         document.head.appendChild(script);
         return () => window.removeEventListener('resize', handleResize);
-    }, [])
+    }, []);
 
     return (
-        <>
-            <div className="absolute block bg-gradient-to-br from-blue-100 to-blue-300 w-full h-fit min-h-full pb-16 min-w-[320px]">
-                <div className="absolute h-[100vh] block top-0 left-0 flex justify-center items-center pointer-events-none">
-                    <img className="h-[98%] opacity-20" src={grid.src} alt="Background grid"/>
-                </div>
-                <div className="w-full mt-8 sm:mt-16 flex items-center justify-center">
-                    <h1 className={`text-4xl sm:text-7xl font-semibold ${roboto.className} text-center`}>FORGOT AI</h1>
-                </div>
-                <div className="w-full flex items-center justify-center">
-                    <h1 className={`text-xl sm:text-3xl font-semibold ${roboto.className}`}>By Kai</h1>
-                </div>
-                <div className={"block h-full"}>
-                    <div className={"w-full p-3 sm:p-5"}>
-                        <div className="h-[3%] sm:h-[6.9%]">
-
-                        </div>
-                        <div className="font-semibold text-lg sm:text-xl text-center mb-2">
-                            ForgotAI.com - Independently Developed AI Tools<br/>that don't take peoples' jobs
-                        </div>
-                        <div className={"text-base sm:text-lg leading-6 sm:leading-7 text-center"}>
-                            AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive projects, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), a video redubber, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. All the site art is original, created by me. Happy browsing!
-                        </div>
-                    </div>
-                    <div className={"block items-center justify-center text-center width-full"}>
-                        <div className={"w-full mt-4 sm:mt-8 space-y-3 justify-center items-center flex flex-wrap"}>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./writing_reviewer')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    AI Writing Reviewer - Available Now!
-                                </div>
-                                <img src={essaySplash.src} className="rounded-lg w-full" alt="Writing Reviewer"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./actions')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    Large Action Model POC - Available Now!
-                                </div>
-                                <img src={LAMSplash.src} className="rounded-lg w-full" alt="Large Action Model"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/Video-Translator', 'blank')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    Video Translator/Redubber - Available Now!
-                                </div>
-                                <img src={translateSplash.src} className="rounded-lg w-full" alt="Video Translator"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('./analytics')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    Natural Language Analytics POC - Available Now!
-                                </div>
-                                <img src={analyzeSplash.src} className="rounded-lg w-full" alt="Natural Language Analytics"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/os-assistant', '_blank')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    Natural Language OS Assistant POC - Available Now!
-                                </div>
-                                <img src={scriptSplash.src} className="rounded-lg w-full" alt="OS Assistant"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-h-48 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg" onClick={() => {window.open('https://github.com/KaiSereni/easyai', '_blank')}}>
-                                <div className="p-1 text-sm sm:text-base">
-                                    Customizable neural network trainer - Available Now!
-                                </div>
-                                <img src={easyai.src} className="rounded-lg w-full" alt="easyai"/>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 min-h-48 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
-                                <div className="p-1 text-sm sm:text-base">
-                                    Self-checking code writer/unsupervised code model fine tuning - WIP
-                                </div>
-                            </div>
-                            <div className="w-full sm:w-auto max-w-64 min-w-32 mx-2 my-2 sm:my-0 rounded-lg bg-blue-400 shadow duration-200 cursor-pointer hover:scale-[101%] hover:shadow-lg">
-                                <div className="p-1 text-sm sm:text-base">
-                                    Left and right brain neural network - WIP
-                                </div>
-                                <img src={brainSplash.src} className="rounded-lg w-full" alt="Brain Neural Network"/>
-                            </div>
-                        </div>
-                    </div>
+        <div 
+            className="min-h-fit h-fit relative flex flex-col items-center"
+            style={{
+                backgroundImage: `url(${grid.src})`,
+                backgroundSize: "400px"
+            }}
+        >
+            <div 
+                className="w-[100%] h-[100%] absolute z-10"
+                style={{
+                    background: "linear-gradient(165deg, rgba(212, 228, 250, 0.95), rgba(212, 228, 250, 0.95), rgba(212, 228, 250, 0.7))"
+                }}
+            />
+            <div className="w-full max-w-4xl p-4 z-20">
+                <h1 className={`text-4xl font-semibold ${roboto.className} text-center`}>FORGOT AI</h1>
+                <h2 className={`text-xl ${roboto.className} text-center mb-8`}>Independently developed AI tools that don't take peoples' jobs - by Kai</h2>
+                <p className="text-center mb-8">
+                AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive systems, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer/proofreader, a video redubber, a (theoretically) HIPAA-compliant natural-language analytics tool, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. All the site art is original, created by me. Happy browsing!                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+                    <Card title="AI Writing Reviewer" image={essaySplash.src} link="./writing_reviewer" />
+                    <Card title="Large Action Model POC" image={LAMSplash.src} link="./actions" />
+                    <Card title="Video Translator/Redubber" image={translateSplash.src} link="https://github.com/KaiSereni/Video-Translator" />
+                    <Card title="Natural Language Analytics POC" image={analyzeSplash.src} link="./analytics" />
+                    <Card title="OS Assistant POC" image={scriptSplash.src} link="https://github.com/KaiSereni/os-assistant" />
+                    <Card title="Customizable Neural Network Trainer" image={easyai.src} link="https://github.com/KaiSereni/easyai" />
+                    <Card title="Self-supervised coding language model fine tune - WIP" image={codingSelfSupervised.src} link="#" />
+                    <Card title="Left and Right Brain Neural Network - WIP" image={brainSplash.src} link="#" />
                 </div>
             </div>
-        </>
-    )
+        </div>
+    );
+}
+
+function Card({ title, image, link }: { title: string, image: string, link: string }) {
+    return (
+        <div className="bg-white rounded-lg overflow-hidden cursor-pointer hover:shadow border border-gray-500 duration-200" onClick={() => window.open(link, '_blank')}>
+            <img src={image} alt={title} className="w-full h-48 object-cover" />
+            <div className="p-4">
+                <h3 className="text-lg font-semibold">{title}</h3>
+            </div>
+        </div>
+    );
 }

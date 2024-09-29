@@ -27,7 +27,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Nav/>
         {children}
-        <div className="fixed bottom-0 min-h-12 h-fit bg-white w-full flex items-center">
+        <div className="fixed bottom-0 min-h-12 h-fit bg-white w-full flex items-center z-50">
           <div className="ml-4 max-w-[75vw] pointer-events-none">
               © Pohakoo, LLC. Designed and coded by Kai Sereni.
           </div>
