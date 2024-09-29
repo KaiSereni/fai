@@ -70,7 +70,7 @@ export default function Home() {
                             ForgotAI.com - Independently Developed AI Tools<br/>that don't take peoples' jobs
                         </div>
                         <div className={"text-base sm:text-lg leading-6 sm:leading-7 text-center"}>
-                            AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive projects, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), a video redubber, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. Happy browsing!
+                            AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive projects, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer (not a rewriter, not a ghostwriter, just a reviewer), a video redubber, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. All the site art is original, created by me. Happy browsing!
                         </div>
                     </div>
                     <div className={"block items-center justify-center text-center width-full"}>
