@@ -1,19 +1,56 @@
-**
-!/site/
-!/site/package.json
-!/site/functions/
-!/site/public/
-#!/other_scripts/
-!/other_scripts/custom_neural_nets/
-!/other_scripts/custom_neural_nets/*.py
-!/site/public/**
-!/site/functions/*.py
-!/site/functions/requirements.txt
-!/site/src/
-!/site/src/**
-site/src/components/key_constants.tsx
-**/*.log
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/dist/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# python
 **/__pycache__/
-**/venv/
-**/image_dataset/
-site/.next/
+/.venv/
+
+# misc
+/.firebase/
+/other_scripts/
+src/components/key_constants.tsx
+.firebaserc
+firebase.json
+functions/api_keys.json
+/functions/temp/
+**/*.wav
+
+# redundancies
+/src/app/privacy/
+/src/app/ads/
+/functions/models/
+functions/fb_keys.json
+functions/oai_keys.json
