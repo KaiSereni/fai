@@ -37,6 +37,7 @@ next-env.d.ts
 # python
 **/__pycache__/
 /.venv/
+functions/*.local
 
 # misc
 /.firebase/
@@ -54,3 +55,4 @@ functions/api_keys.json
 /functions/models/
 functions/fb_keys.json
 functions/oai_keys.json
+/functions/venv
