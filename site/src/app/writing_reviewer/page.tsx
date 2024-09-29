@@ -221,7 +221,7 @@ export default function Essay() {
                                         })
                                     }
                                     catch (error) {
-                                        console.log("error getting correctionz");
+                                        console.log("error getting corrections");
                                         console.error(error);
                                         setOutputList('e');
                                     }

@@ -59,7 +59,7 @@ export default function Home() {
             <div 
                 className="w-[100%] h-[100%] absolute z-10"
                 style={{
-                    background: "linear-gradient(165deg, rgba(212, 228, 250, 0.95), rgba(212, 228, 250, 0.95), rgba(212, 228, 250, 0.7))"
+                    background: "linear-gradient(165deg, rgba(212, 228, 250, 0.7), rgba(212, 228, 250, 0.65), rgba(212, 228, 250, 0.2))"
                 }}
             />
             <div className="w-full max-w-4xl p-4 z-20">
