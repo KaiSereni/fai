@@ -48,6 +48,7 @@ firebase.json
 functions/api_keys.json
 /functions/temp/
 **/*.wav
+firebase-debug.log
 
 # redundancies
 /src/app/privacy/

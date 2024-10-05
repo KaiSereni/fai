@@ -56,6 +56,10 @@ export default function Home() {
                 backgroundSize: "400px"
             }}
         >
+            <div className="w-full h-fit py-4 bg-gray-900 z-20 text-white">
+                <h1 className={`text-4xl font-semibold ${roboto.className} text-center`}>FORGOT AI</h1>
+                <h2 className={`text-xl ${roboto.className} text-center`}>Independently developed AI tools that don't take peoples' jobs - by Kai</h2>
+            </div>
             <div 
                 className="w-[100%] h-[100%] absolute z-10"
                 style={{
@@ -63,8 +67,6 @@ export default function Home() {
                 }}
             />
             <div className="w-full max-w-4xl p-4 z-20">
-                <h1 className={`text-4xl font-semibold ${roboto.className} text-center`}>FORGOT AI</h1>
-                <h2 className={`text-xl ${roboto.className} text-center mb-8`}>Independently developed AI tools that don't take peoples' jobs - by Kai</h2>
                 <p className="text-center mb-8">
                 AI is moving so fast. Lets just... slow down. AI has a lot of potential, and we're using it it to make these massive systems, but here are some of the smaller, quality-of-life AI tools that the big companies just forgot to make. I have tools like a GPT-powered writing reviewer/proofreader, a video redubber, a (theoretically) HIPAA-compliant natural-language analytics tool, and I also have a bunch of cool ideas for future projects. <br/> I'll be making all these projects open-source and allowing contributions on GitHub, and maybe at some point I'll add forms. All the site art is original, created by me. Happy browsing!                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
